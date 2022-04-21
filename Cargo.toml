@@ -1,5 +1,5 @@
 [package]
-name = "cloudflare-api"
+name = "cloudflare_api"
 version = "0.1.0"
 edition = "2021"
 
