@@ -1,17 +1,19 @@
-use std::collections::HashMap;
+use reqwest::header::{HeaderMap, HeaderName, AUTHORIZATION};
 
 pub struct TokenAuth
 {
-    email: String,
-    token: String
+    pub email: String,
+    pub token: String
 }
 impl TokenAuth
 {
-    fn get_headers() -> HashMap<String, String>
+    pub fn headers(&self) -> HeaderMap
     {
-        let mut headers = HashMap::new();
-        headers.insert(String::from("X-Auth-Email"), email);
-        headers.insert(String::from("Authorization"), String::from("Bearer ") + token);
-        Ok(headers)
+        let mut headers = HeaderMap::new();
+        
+        headers.insert(AUTHORIZATION, [&"Bearer", self.token.as_str()].join(" ").parse().unwrap());
+        headers.insert(HeaderName::from_static("x-auth-email"), self.email.parse().unwrap());
+        headers
     }
+
 }
