@@ -15,5 +15,4 @@ impl TokenAuth
         headers.insert(HeaderName::from_static("x-auth-email"), self.email.parse().unwrap());
         headers
     }
-
 }

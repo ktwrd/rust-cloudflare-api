@@ -21,7 +21,11 @@ impl Client
 
     pub async fn verify_token(&mut self) -> Result<String, task::JoinError>
     {
-        let resp: std::result::Result<reqwest::Response, reqwest::Error> = self.web_client.get([self.base_url.to_string(), String::from("user/tokens/verify")].join("/"))
+        let resp: std::result::Result<reqwest::Response, reqwest::Error> =
+            self.web_client.get([
+                    self.base_url.to_string(),
+                    String::from("user/tokens/verify")
+                    ].join("/"))
             .headers(self.auth.headers())
             .send()
             .await;
@@ -33,7 +37,11 @@ impl Client
 
     pub async fn get_zone(&mut self, zone: String) -> Result<String, task::JoinError>
     {
-        let resp: std::result::Result<reqwest::Response, reqwest::Error> = self.web_client.get([self.base_url.to_string(), String::from("zones"), zone].join("/"))
+        let resp: std::result::Result<reqwest::Response, reqwest::Error> =
+            self.web_client.get([
+                    self.base_url.to_string(),
+                    String::from("zones"),
+                    zone].join("/"))
             .headers(self.auth.headers())
             .send()
             .await;
