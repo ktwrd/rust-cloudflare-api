@@ -35,6 +35,7 @@ impl Client
         Ok(result)
     }
 
+    #[allow(dead_code)]
     pub async fn get_zone(&mut self, zone: String) -> Result<String, task::JoinError>
     {
         let resp: std::result::Result<reqwest::Response, reqwest::Error> =
