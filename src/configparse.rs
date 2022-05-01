@@ -22,8 +22,6 @@ impl INIFile
     {
         if Path::new(&self.filepath).exists() == false {
             self.save()?;
-        } else {
-            println!("config->exists");
         }
 
         let mut data_new: HashMap<String, String> = HashMap::new();
