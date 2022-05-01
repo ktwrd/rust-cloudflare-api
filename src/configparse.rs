@@ -59,7 +59,8 @@ impl INIFile
         }
 
         let full_file_content = file_content.join("\n");
-        std::fs::write(&self.filepath, full_file_content)?;
+
+        std::fs::write(&self.filepath, String::from(full_file_content))?;
 
         Ok(())
     }
