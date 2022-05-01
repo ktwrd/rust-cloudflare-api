@@ -2,6 +2,7 @@ mod auth;
 mod client;
 mod configparse;
 use tokio::task;
+use std::process;
 
 #[tokio::main]
 async fn main() -> Result<(), task::JoinError>
@@ -21,6 +22,12 @@ async fn main() -> Result<(), task::JoinError>
     let mut config_token = String::from("");
     if config_token_obj.is_none() == false {
         config_token = config_token_obj.unwrap().to_string()
+    }
+
+    if config_token.len() < 1 && config_email.len() < 1
+    {
+        println!("Your configuration seems to be empty. Please set the 'cloudflare_email' and 'cloudflare_token' fields in config.cfg to continue.");
+        process::exit(0x0100);
     }
 
     let auth = auth::TokenAuth
