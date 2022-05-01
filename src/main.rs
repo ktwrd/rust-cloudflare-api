@@ -42,8 +42,29 @@ async fn main() -> Result<(), task::JoinError>
     let verify_response: String = client.verify_token().await.unwrap();
     println!("verifyResponse: {}", verify_response);
 
+    let target_domain: String = String::from("kate.pet");
+
     let all_zones: Vec<client::ResponseZoneInfo> = client.get_all_zones().await.unwrap();
-    println!("{:#?}", all_zones);
+    // println!("{:#?}", all_zones);
+
+
+    let mut target_zone: Option<client::ResponseZoneInfo> = None;
+    for zone in all_zones
+    {
+        if zone.name == target_domain
+        {
+            target_zone = Option::Some(zone);
+        }
+    }
+
+    if target_zone.is_none()
+    {
+        println!("Could not find zone with the domain of {:?}", target_domain);
+        process::exit(0x0100);
+    }
+
+    let test_zone = client.get_zone(String::from(target_zone.unwrap().id)).await.unwrap();
+    println!("{:#?}", test_zone);
 
     Ok(())
 }
