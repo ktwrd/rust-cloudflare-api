@@ -42,5 +42,8 @@ async fn main() -> Result<(), task::JoinError>
     let verify_response: String = client.verify_token().await.unwrap();
     println!("verifyResponse: {}", verify_response);
 
+    let all_zones: Vec<client::ResponseZoneInfo> = client.get_all_zones().await.unwrap();
+    println!("{:#?}", all_zones);
+
     Ok(())
 }
