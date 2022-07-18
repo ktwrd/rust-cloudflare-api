@@ -22,8 +22,6 @@ impl INIFile
     {
         if Path::new(&self.filepath).exists() == false {
             self.save()?;
-        } else {
-            println!("config->exists");
         }
 
         let mut data_new: HashMap<String, String> = HashMap::new();
@@ -61,7 +59,8 @@ impl INIFile
         }
 
         let full_file_content = file_content.join("\n");
-        std::fs::write(&self.filepath, full_file_content)?;
+
+        std::fs::write(&self.filepath, String::from(full_file_content))?;
 
         Ok(())
     }

@@ -11,10 +11,7 @@ extern crate serde_derive;
 extern crate serde;
 extern crate serde_json;
 
-#[derive(Deserialize, Debug)]
-struct Item {
-    value: u64,
-}
+use std::process;
 
 #[tokio::main]
 async fn main() -> Result<(), task::JoinError>
@@ -34,6 +31,12 @@ async fn main() -> Result<(), task::JoinError>
     let mut config_token = String::from("");
     if config_token_obj.is_none() == false {
         config_token = config_token_obj.unwrap().to_string()
+    }
+
+    if config_token.len() < 1 && config_email.len() < 1
+    {
+        println!("Your configuration seems to be empty. Please set the 'cloudflare_email' and 'cloudflare_token' fields in config.cfg to continue.");
+        process::exit(0x0100);
     }
 
     let auth = auth::TokenAuth
@@ -61,6 +64,31 @@ async fn main() -> Result<(), task::JoinError>
         print!("{}: ", id);
         print!("{}\n", name);
     }
+
+
+    // let target_domain: String = String::from("kate.pet");
+
+    // let all_zones: Vec<client::ResponseZoneInfo> = client.get_all_zones().await.unwrap();
+    // // println!("{:#?}", all_zones);
+
+
+    // let mut target_zone: Option<client::ResponseZoneInfo> = None;
+    // for zone in all_zones
+    // {
+    //     if zone.name == target_domain
+    //     {
+    //         target_zone = Option::Some(zone);
+    //     }
+    // }
+
+    // if target_zone.is_none()
+    // {
+    //     println!("Could not find zone with the domain of {:?}", target_domain);
+    //     process::exit(0x0100);
+    // }
+
+    // let test_zone = client.get_zone(String::from(target_zone.unwrap().id)).await.unwrap();
+    // println!("{:#?}", test_zone);
 
     Ok(())
 }
