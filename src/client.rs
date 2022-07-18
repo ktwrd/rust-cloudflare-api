@@ -35,6 +35,22 @@ impl Client
         Ok(result)
     }
 
+    pub async fn get_zone_arr(&mut self) -> Result<String, task::JoinError>
+    {
+        let resp: std::result::Result<reqwest::Response, reqwest::Error> =
+            self.web_client.get([
+                    self.base_url.to_string(),
+                    String::from("zones")
+                    ].join("/"))
+            .headers(self.auth.headers())
+            .send()
+            .await;
+            
+        let thing: reqwest::Result<String> = resp.unwrap().text().await;
+        let result = thing.unwrap();
+        Ok(result)
+    }
+
     pub async fn get_zone(&mut self, zone: String) -> Result<String, task::JoinError>
     {
         let resp: std::result::Result<reqwest::Response, reqwest::Error> =
