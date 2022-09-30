@@ -96,9 +96,14 @@ impl Client
             .send()
             .await;
             
-        let thing: reqwest::Result<String> = resp.unwrap().text().await;
-        let result = thing.unwrap();
-        Ok(result)
+        match resp {
+            Ok(_) => Ok(resp.unwrap().text().await.unwrap()),
+            Err(_) => panic!("failed to verify token - line 88")
+        };
+        
+        //let thing: reqwest::Result<String> = resp.unwrap().text().await;
+        //let result = thing.unwrap();
+        //Ok(result)
     }
 
     pub async fn get_zone_arr(&mut self) -> Result<String, task::JoinError>
